@@ -1,11 +1,4 @@
-function Turn_Right () {
-    while (PlanetX_Basic.TrackbitChannelState(PlanetX_Basic.TrackbitChannel.Three, PlanetX_Basic.TrackbitType.State_0)) {
-        neZha.setMotorSpeed(neZha.MotorList.M1, 15)
-        neZha.setMotorSpeed(neZha.MotorList.M2, -5)
-    }
-    neZha.stopAllMotor()
-}
-function Line_Follower (speed: number) {
+function LF (speed: number) {
     if (PlanetX_Basic.TrackbitChannelState(PlanetX_Basic.TrackbitChannel.Two, PlanetX_Basic.TrackbitType.State_1) && PlanetX_Basic.TrackbitChannelState(PlanetX_Basic.TrackbitChannel.Three, PlanetX_Basic.TrackbitType.State_1)) {
         neZha.setMotorSpeed(neZha.MotorList.M1, speed)
         neZha.setMotorSpeed(neZha.MotorList.M2, speed)
@@ -27,27 +20,58 @@ function Line_Follower (speed: number) {
     }
 }
 function Turn_Left () {
-    while (PlanetX_Basic.TrackbitChannelState(PlanetX_Basic.TrackbitChannel.One, PlanetX_Basic.TrackbitType.State_0)) {
+    while (PlanetX_Basic.TrackbitChannelState(PlanetX_Basic.TrackbitChannel.Two, PlanetX_Basic.TrackbitType.State_0)) {
         neZha.setMotorSpeed(neZha.MotorList.M1, -5)
         neZha.setMotorSpeed(neZha.MotorList.M2, 15)
     }
     neZha.stopAllMotor()
 }
+function TR () {
+    neZha.setMotorSpeed(neZha.MotorList.M1, 15)
+    neZha.setMotorSpeed(neZha.MotorList.M2, 0)
+    basic.pause(250)
+    while (PlanetX_Basic.TrackbitChannelState(PlanetX_Basic.TrackbitChannel.Two, PlanetX_Basic.TrackbitType.State_0)) {
+        neZha.setMotorSpeed(neZha.MotorList.M1, 15)
+        neZha.setMotorSpeed(neZha.MotorList.M2, -5)
+    }
+    neZha.stopAllMotor()
+}
+basic.showIcon(IconNames.Heart)
 while (PlanetX_Basic.TrackbitChannelState(PlanetX_Basic.TrackbitChannel.Four, PlanetX_Basic.TrackbitType.State_0)) {
-    Line_Follower(15)
+    LF(15)
 }
 neZha.stopAllMotor()
 neZha.setMotorSpeed(neZha.MotorList.M1, 15)
 neZha.setMotorSpeed(neZha.MotorList.M2, 15)
 basic.pause(200)
-Turn_Right()
+TR()
 while (PlanetX_Basic.TrackbitChannelState(PlanetX_Basic.TrackbitChannel.One, PlanetX_Basic.TrackbitType.State_0)) {
-    Line_Follower(15)
+    LF(15)
 }
 neZha.setMotorSpeed(neZha.MotorList.M1, 15)
 neZha.setMotorSpeed(neZha.MotorList.M2, 15)
 basic.pause(200)
-Turn_Left()
-while (PlanetX_Basic.TrackbitState(PlanetX_Basic.TrackbitStateType.Tracking_State_5)) {
-    Line_Follower(15)
+while (PlanetX_Basic.TrackbitChannelState(PlanetX_Basic.TrackbitChannel.Two, PlanetX_Basic.TrackbitType.State_1)) {
+    neZha.setMotorSpeed(neZha.MotorList.M1, -10)
+    neZha.setMotorSpeed(neZha.MotorList.M2, 20)
 }
+neZha.stopAllMotor()
+Turn_Left()
+while (PlanetX_Basic.TrackbitChannelState(PlanetX_Basic.TrackbitChannel.Four, PlanetX_Basic.TrackbitType.State_0)) {
+    LF(15)
+}
+Turn_Left()
+neZha.stopAllMotor()
+neZha.setMotorSpeed(neZha.MotorList.M1, -15)
+neZha.setMotorSpeed(neZha.MotorList.M2, -15)
+basic.pause(1800)
+neZha.stopAllMotor()
+neZha.setMotorSpeed(neZha.MotorList.M1, 15)
+neZha.setMotorSpeed(neZha.MotorList.M2, 15)
+basic.pause(200)
+neZha.stopAllMotor()
+TR()
+while (PlanetX_Basic.TrackbitChannelState(PlanetX_Basic.TrackbitChannel.Two, PlanetX_Basic.TrackbitType.State_1) && PlanetX_Basic.TrackbitChannelState(PlanetX_Basic.TrackbitChannel.Three, PlanetX_Basic.TrackbitType.State_1)) {
+    LF(15)
+}
+neZha.stopAllMotor()
